@@ -2,6 +2,7 @@ Group 7 participants:
    - Jorge Alberto Menjivar
    - Gabriel Scuzziato Dubiela
    - Soraya Skavinki
+   - Gerald Newell
 
 
 
