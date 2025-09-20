@@ -1,4 +1,16 @@
 import Image from "next/image";
+import Hero from "@/components/Hero";
+
+export default function Home() {
+  return (
+    <main className="flex flex-col">
+      <Hero />
+      {/* Other sections of homepage */}
+    </main>
+  );
+}
+
+/* CODE BELOW IS THE DEFAULT FROM MAIN
 
 export default function Home() {
   return (
@@ -100,4 +112,4 @@ export default function Home() {
       </footer>
     </div>
   );
-}
+} */
