@@ -13,3 +13,49 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+//User DATABASE (ID default, phone # optional)
+
+model User {
+  id        Int      @id @default(autoincrement())
+  firstName String
+  lastName  String
+  email     String   @unique
+  password  String
+  phone     String?   // optional
+  ratings   Rating[]  // ratings by user
+}
+
+// Category (dinamic, where devs can add)
+model Category {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  products Product[]
+}
+
+//Product
+
+model Product {
+  id          Int        @id @default(autoincrement())
+  name        String
+  picture     String     // URL or image path
+  description String
+  price       Float
+  category    Category   @relation(fields: [categoryId], references: [id])
+  categoryId  Int
+  ratings     Rating[]   //relation to evaluation
+}
+
+//Rating (1 worst 5 best), optional comments, refers to user and product
+model Rating {
+  id        Int      @id @default(autoincrement())
+  value     Int      // 1 a 5
+  comment   String?  // opcional
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  product   Product  @relation(fields: [productId], references: [id])
+  productId Int
+  createdAt DateTime @default(now())
+}
+
+
