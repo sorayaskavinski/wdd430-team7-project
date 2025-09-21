@@ -3,9 +3,9 @@ import { SocialMediaIcons } from "./footer/social-media-icons";
 
 export default function Footer() {
   return (
-    <footer className="relative px-6 py-7 flex justify-between">
+    <footer className="relative px-6 py-7 flex flex-col items-center lg:flex-row lg:justify-between lg:items-center gap-7">
       <nav className="flex">
-        <ul className="flex gap-10">
+        <ul className="flex gap-6">
           <li><Link href="/marketplace">Marketplace</Link></li>
           <li><Link href="/sellers">Sellers</Link></li>
           <li><Link href="/about">About</Link></li>
