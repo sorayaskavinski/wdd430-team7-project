@@ -6,18 +6,18 @@ const prisma = new PrismaClient();
 type ProductWithRelations = {
   id: number;
   name: string;
-  picture: string;
+  pictureURL: string;
   description: string;
   price: number;
-  category: { name: string };
+  category: string;
   ratings: { value: number }[];
 };
 
 
 export default async function MarketplacePage() {
   // fetching produts from the database
-  const products: ProductWithRelations[] = await prisma.product.findMany({
-    include: { ratings: true, category: true },
+  const products = await prisma.product.findMany({
+    include: { ratings: true},
   });
 
   // function to calculate average rating
@@ -32,7 +32,7 @@ export default async function MarketplacePage() {
         <div key={product.id} className="border p-4 rounded-lg shadow hover:shadow-lg transition">
           <div className="relative w-full h-64">
             <Image
-              src={product.picture}
+              src={product.pictureURL}
               alt={product.name}
               fill
               className="object-cover rounded"
@@ -42,7 +42,7 @@ export default async function MarketplacePage() {
           <p className="text-gray-700">{product.description}</p>
           <p className="mt-1 font-semibold">${product.price.toFixed(2)}</p>
           <p className="mt-1 text-sm text-gray-500">
-            Category: {product.category.name}
+            Category: {product.category.replace("_", " ")}
           </p>
           <p className="mt-1 text-yellow-500">
             Rating: {getAverageRating(product.ratings).toFixed(1)} ⭐

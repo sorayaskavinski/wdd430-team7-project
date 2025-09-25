@@ -14,42 +14,55 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-//User DATABASE (ID default, phone # optional)
+enum Category {
+  HOME_LIVING
+  JEWELRY_ACCESSORIES
+  CLOTHING
+  BAGS_PURSES
+  ART_COLLECTIBLES
+  BATH_BEAUTY
+}
 
+enum Role{
+  ADMIN
+  BUYER
+  SELLER
+}
+
+// Users 
 model User {
-  id        Int      @id @default(autoincrement())
-  firstName String
-  lastName  String
-  email     String   @unique
-  password  String
-  phone     String?   // optional
-  ratings   Rating[]  // ratings by user
+  id          Int       @id @default(autoincrement())
+  firstName   String
+  lastName    String
+  email       String    @unique
+  passwordHash String
+  phone       String?
+  roles       Role[]    // ADMIN, BUYER, SELLER
+  bio         String?
+  avatar      String?   // URL da foto de perfil
+  addresses   String?
+  ratings     Rating[]
+  products    Product[]
 }
 
-// Category (dinamic, where devs can add)
-model Category {
-  id       Int       @id @default(autoincrement())
-  name     String    @unique
-  products Product[]
-}
-
-//Product
-
+// Products
 model Product {
   id          Int        @id @default(autoincrement())
   name        String
-  picture     String     // URL or image path
+  pictureURL  String     // URL gerada pelo Supabase Storage
   description String
   price       Float
-  category    Category   @relation(fields: [categoryId], references: [id])
-  categoryId  Int
-  ratings     Rating[]   //relation to evaluation
+  quantity    Int
+  seller      User       @relation(fields: [sellerId], references: [id])
+  sellerId    Int
+  category    Category   
+  ratings     Rating[]
 }
 
-//Rating (1 worst 5 best), optional comments, refers to user and product
+// Rating
 model Rating {
   id        Int      @id @default(autoincrement())
-  value     Int      // 1 a 5
+  value     Int      // 1-5
   comment   String?  // opcional
   user      User     @relation(fields: [userId], references: [id])
   userId    Int
@@ -57,5 +70,3 @@ model Rating {
   productId Int
   createdAt DateTime @default(now())
 }
-
-
