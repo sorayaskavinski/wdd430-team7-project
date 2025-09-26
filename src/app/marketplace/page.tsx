@@ -1,38 +1,41 @@
-import { PrismaClient } from "@/generated/prisma";
 import Image from "next/image";
 
-const prisma = new PrismaClient();
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
 type ProductWithRelations = {
   id: number;
   name: string;
-  picture: string;
+  pictureURL: string;
   description: string;
   price: number;
-  category: { name: string };
+  category: string;
   ratings: { value: number }[];
 };
 
-
 export default async function MarketplacePage() {
-  // fetching produts from the database
-  const products: ProductWithRelations[] = await prisma.product.findMany({
-    include: { ratings: true, category: true },
+  // Calls API
+  const res = await fetch(`${baseUrl}/api/seller/products?sellerId=1`, {
+    cache: "no-store",
   });
 
-  // function to calculate average rating
+  const products: ProductWithRelations[] = await res.json();
+
+  // Calculate average rating
   const getAverageRating = (ratings: { value: number }[]) => {
-    if (ratings.length === 0) return 0;
+    if (!ratings || ratings.length === 0) return 0;
     return ratings.reduce((sum, r) => sum + r.value, 0) / ratings.length;
   };
 
   return (
     <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
       {products.map((product) => (
-        <div key={product.id} className="border p-4 rounded-lg shadow hover:shadow-lg transition">
+        <div
+          key={product.id}
+          className="border p-4 rounded-lg shadow hover:shadow-lg transition"
+        >
           <div className="relative w-full h-64">
             <Image
-              src={product.picture}
+              src={product.pictureURL}
               alt={product.name}
               fill
               className="object-cover rounded"
@@ -42,10 +45,10 @@ export default async function MarketplacePage() {
           <p className="text-gray-700">{product.description}</p>
           <p className="mt-1 font-semibold">${product.price.toFixed(2)}</p>
           <p className="mt-1 text-sm text-gray-500">
-            Category: {product.category.name}
+            Category: {product.category.replace("_", " ")}
           </p>
           <p className="mt-1 text-yellow-500">
-            Rating: {getAverageRating(product.ratings).toFixed(1)} ⭐
+            Rating: {getAverageRating(product.ratings)?.toFixed(1)} ⭐
           </p>
         </div>
       ))}

@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    domains: ['example.com', 'via.placeholder.com', 'dcdn-us.mitiendanube.com',  'julializie.bwimg.com.br'],   },
 };
 
 export default nextConfig;
