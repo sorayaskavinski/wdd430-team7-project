@@ -2,6 +2,7 @@
   "name": "wdd430-team7-project",
   "version": "0.1.0",
   "private": true,
+  
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
@@ -30,4 +31,5 @@
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.9.2"
   }
+
 }
