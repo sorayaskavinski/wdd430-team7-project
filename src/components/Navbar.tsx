@@ -11,7 +11,7 @@ export default function Navbar() {
       <header className="w-full px-6 py-5 flex items-center justify-between relative bg-transparent">
         <div className="text-xl font-bold z-10">
           <Link href="/home">
-            <span>H</span>ancrafted<span>H</span>aven
+            <span className="text-3xl">H</span>ancrafted<span className="text-3xl">H</span>aven
           </Link>
         </div>
 
