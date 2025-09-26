@@ -20,12 +20,12 @@ const displayNames: Record<string, string> = {
   BATH_BEAUTY: "Bath & Beauty",
 };
 
-export default function CategoryBar({ onSelect }: { onSelect: (cat: string) => void }) {
+export default function CategoryBar({ onSelectAction }: { onSelectAction: (cat: string) => void }) {
   const [selected, setSelected] = useState<string>("");
 
   const handleClick = (cat: string) => {
     setSelected(cat);
-    onSelect(cat);
+    onSelectAction(cat);
   };
 
   return (
