@@ -8,26 +8,25 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const sellerId = searchParams.get("sellerId");
-
+   
     if (!sellerId) {
       return NextResponse.json({ error: "Seller ID is required" }, { status: 400 });
-    }
-
+    } 
+    
     const products = await prisma.product.findMany({
-      where: {
-        sellerId: parseInt(sellerId),
-      },
-      orderBy: {
-        id: "desc",
-      },
+      where: { sellerId: parseInt(sellerId, 10) },    
+      orderBy: { id: 'desc', },
     });
 
-    return NextResponse.json(products);
-  } catch (error) {
-    console.error("Error fetching seller products:", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
-  }
+    return NextResponse.json(products, { status: 200 });
+      
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    }
 }
+
+    
 
 // POST /api/seller/products - Create a new product
 export async function POST(request: NextRequest) {

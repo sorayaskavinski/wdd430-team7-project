@@ -1,22 +1,21 @@
-import {PrismaClient} from "@/generated/prisma";
+// components/Products.tsx
+import { PrismaClient } from "@/generated/prisma";
 
-type ProductType = Awaited<ReturnType<typeof PrismaClient['prototype']['product']['findMany']>>[number];
-
+const prisma = new PrismaClient();
 
 export default async function Products() {
-  
-  const products = await PrismaClient.prototype.product.findMany({
-    include: {
-      seller: true,     },
+  // fetching products from the database
+  const products = await prisma.product.findMany({
+    include: { seller: true },
   });
 
-  if (products.length === 0) {
-    return <p className="text-center py-6">Nenhum produto disponível.</p>;
+  if (!products.length) {
+    return <p className="text-center py-6">No available product.</p>;
   }
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
-      {products.map((product: ProductType) => (
+      {products.map((product) => (
         <div
           key={product.id}
           className="border rounded-xl p-4 shadow hover:shadow-lg transition"
@@ -34,9 +33,9 @@ export default async function Products() {
           <p className="text-xs text-gray-500">
             Categoria: {product.category.replace("_", " ")}
           </p>
-          {product.sellerId && (
+          {product.seller && (
             <p className="text-xs text-gray-500">
-              Vendedor: {product.sellerId}
+              Vendedor: {product.seller.firstName} {product.seller.lastName}
             </p>
           )}
         </div>
