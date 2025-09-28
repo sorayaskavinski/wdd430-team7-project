@@ -1,26 +1,14 @@
-<<<<<<< HEAD
 import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (
     <>
-    <Navbar />
-    <main>{children}</main>
-    <Footer />
+    <div className="flex flex-col min-h-screen">
+        <Navbar />
+        <main className="flex-grow">{children}</main>
+        <Footer />
+    </div>
     </>
     )
-=======
-import Navbar from "@/components/Navbar"
-import Footer from "@/components/Footer"
-
-export default function Layout({ children }: { children: React.ReactNode }) {
-    return (
-    <>
-    <Navbar />
-    <main>{children}</main>
-    <Footer />
-    </>
-    )
->>>>>>> gd-editproductform
 }

@@ -35,10 +35,10 @@ export default function Hero() {
                         Explore Marketplace
                     </a>
                     <a
-                        href="/sellers"
+                        href="/seller/products"
                         className="px-6 py-3 rounded-lg border border-white text-white font-semibold hover:bg-white hover:text-black transition-colors"
                     >
-                        Meet the Sellers
+                        My Products
                     </a>
                 </div>
             </div>

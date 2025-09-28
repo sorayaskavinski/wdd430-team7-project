@@ -1,57 +1,23 @@
-import Image from "next/image";
+import ProductCard from "@/components/ProductCard";
+import { ProductWithRelations } from "@/types/products";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
-type ProductWithRelations = {
-  id: number;
-  name: string;
-  pictureURL: string;
-  description: string;
-  price: number;
-  category: string;
-  ratings: { value: number }[];
-};
-
 export default async function MarketplacePage() {
   // Calls API
-  const res = await fetch(`${baseUrl}/api/seller/products?sellerId=1`, {
+  const res = await fetch(`${baseUrl}/api/products`, {
     cache: "no-store",
   });
 
   const products: ProductWithRelations[] = await res.json();
 
-  // Calculate average rating
-  const getAverageRating = (ratings: { value: number }[]) => {
-    if (!ratings || ratings.length === 0) return 0;
-    return ratings.reduce((sum, r) => sum + r.value, 0) / ratings.length;
-  };
-
   return (
-    <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-      {products.map((product) => (
-        <div
-          key={product.id}
-          className="border p-4 rounded-lg shadow hover:shadow-lg transition"
-        >
-          <div className="relative w-full h-64">
-            <Image
-              src={product.pictureURL}
-              alt={product.name}
-              fill
-              className="object-cover rounded"
-            />
-          </div>
-          <h2 className="mt-2 font-bold text-lg">{product.name}</h2>
-          <p className="text-gray-700">{product.description}</p>
-          <p className="mt-1 font-semibold">${product.price.toFixed(2)}</p>
-          <p className="mt-1 text-sm text-gray-500">
-            Category: {product.category.replace("_", " ")}
-          </p>
-          <p className="mt-1 text-yellow-500">
-            Rating: {getAverageRating(product.ratings)?.toFixed(1)} ⭐
-          </p>
-        </div>
-      ))}
+    <section className="w-full flex justify-center p-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 sm:gap-6 gap-10 w-full max-w-[1200px]">
+        {products.map((element) => (
+          <ProductCard key={element.id} product={element} />
+        ))}
+      </div>
     </section>
   );
 }

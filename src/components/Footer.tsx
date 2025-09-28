@@ -7,7 +7,6 @@ export default function Footer() {
       <nav className="flex">
         <ul className="flex gap-6">
           <li><Link href="/marketplace">Marketplace</Link></li>
-          <li><Link href="/sellers">Sellers</Link></li>
           <li><Link href="/about">About</Link></li>
           <li><Link href="/contact">Contact</Link></li>
         </ul>
