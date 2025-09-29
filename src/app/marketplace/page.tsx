@@ -5,7 +5,7 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
 export default async function MarketplacePage() {
   // Calls API
-  const res = await fetch(`${baseUrl}/api/products`, {
+  const res = await fetch(`https://wdd430-team7-project.vercel.app/api/products`, {
     cache: "no-store",
   });
 
