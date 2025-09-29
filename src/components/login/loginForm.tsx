@@ -13,7 +13,7 @@ export default function LoginForm() {
     setShowPassword(!showPassword)
   }
  
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     router.push("/home")  
   }
