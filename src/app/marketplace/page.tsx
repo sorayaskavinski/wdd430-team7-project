@@ -1,11 +1,13 @@
 import ProductCard from "@/components/ProductCard";
 import { ProductWithRelations } from "@/types/products";
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+const rawBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+const baseUrl = rawBaseUrl.startsWith("http") ? rawBaseUrl.replace(/\/$/, "") : `https://${rawBaseUrl.replace(/\/$/, "")}`;
 
 export default async function MarketplacePage() {
   // Calls API
-  const res = await fetch(`https://wdd430-team7-project.vercel.app/api/products`, {
+  console.log("Using baseUrl:", baseUrl);
+  const res = await fetch(`${baseUrl}/api/products`, {
     cache: "no-store",
   });
 
